@@ -1,4 +1,4 @@
-FRAUD TRANSACTION DETECTION MODEL
+**FRAUD TRANSACTION DETECTION MODEL**
 
 To complete the fraud transaction detection task using GitHub, you can follow these steps. I'll also help you draft a **README.md** for your GitHub repository.
 
