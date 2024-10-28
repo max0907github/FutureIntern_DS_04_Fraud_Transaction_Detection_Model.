@@ -1,4 +1,5 @@
 # Fraud Transaction Detection Model
+https://pin.it/5Svbe52ho
 ![image](https://github.com/user-attachments/assets/9628ff94-f5a3-4898-84e5-514da989f098)
 ![image](https://github.com/user-attachments/assets/ca3e9134-c0fb-459c-bef2-7c04c9ba1e9b)
 
