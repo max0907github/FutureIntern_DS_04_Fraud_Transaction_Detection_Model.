@@ -1,139 +1,99 @@
-**FRAUD TRANSACTION DETECTION MODEL**
+# Fraud Transaction Detection Model
+![image](https://github.com/user-attachments/assets/9628ff94-f5a3-4898-84e5-514da989f098)
+![image](https://github.com/user-attachments/assets/ca3e9134-c0fb-459c-bef2-7c04c9ba1e9b)
 
-To complete the fraud transaction detection task using GitHub, you can follow these steps. I'll also help you draft a **README.md** for your GitHub repository.
+This project demonstrates a machine learning approach to detecting potentially fraudulent credit card transactions. Using a dataset with imbalanced classes, various classification models such as Logistic Regression and Random Forest were trained, evaluated, and compared based on their precision, recall, F1 Score, and ROC AUC Score.
 
-### Steps for Completing the Task
+## Dataset
 
-1. **Set Up Your Environment**
-   - Use Python for building the machine learning model.
-   - Libraries to install: `pandas`, `numpy`, `sklearn`, `matplotlib`, and `seaborn` (optional but useful for data visualization).
-   
-   ```bash
-   pip install pandas numpy scikit-learn matplotlib seaborn
-   ```
+The data used in this project consists of anonymized credit card transactions, with features that capture various characteristics of each transaction. The dataset is highly imbalanced, containing only a small fraction of fraudulent transactions.
 
-2. **Preprocessing the Dataset**
-   - Load your dataset and check for missing values.
-   - Handle any imbalanced classes. If fraud cases are fewer, techniques like SMOTE (Synthetic Minority Oversampling Technique) can help.
+## Features
 
-   Example:
-   ```python
-   from sklearn.model_selection import train_test_split
-   from sklearn.preprocessing import StandardScaler
-   from imblearn.over_sampling import SMOTE
-   
-   # Split your data into train and test sets
-   X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
-   
-   # Balance the dataset
-   sm = SMOTE(random_state=42)
-   X_train_bal, y_train_bal = sm.fit_resample(X_train, y_train)
-   ```
+- **Time**: Time elapsed between this transaction and the first transaction in the dataset.
+- **V1, V2, ..., V28**: Principal components obtained with PCA to protect the confidentiality of the data.
+- **Amount**: Transaction amount.
+- **Class**: Target variable (0 for legitimate transactions, 1 for fraudulent transactions).
 
-3. **Building the Model**
-   - You can choose between logistic regression, random forest, and neural networks (e.g., a simple MLPClassifier).
-   
-   Example (using Random Forest):
-   ```python
-   from sklearn.ensemble import RandomForestClassifier
-   from sklearn.metrics import classification_report, confusion_matrix
-   
-   rf = RandomForestClassifier(random_state=42)
-   rf.fit(X_train_bal, y_train_bal)
-   
-   y_pred = rf.predict(X_test)
-   print(classification_report(y_test, y_pred))
-   ```
+## Project Workflow
 
-4. **Evaluation**
-   - Use precision, recall, and F1-score as your performance metrics. These metrics will help evaluate how well your model identifies fraudulent activities.
+1. **Data Preprocessing**: 
+   - Handled missing values and scaled numeric fields.
+   - Applied resampling techniques to balance the classes due to the significant class imbalance.
 
-5. **Upload Your Project to GitHub**
-   - Create a new repository and push your project code.
+2. **Model Training and Evaluation**:
+   - Trained two main classifiers: Logistic Regression and Random Forest.
+   - Evaluated models based on Precision, Recall, F1 Score, and ROC AUC Score.
 
-### Sample `README.md`
+3. **Results**:
+   - Compared model performances to determine the best classifier for detecting fraudulent transactions.
 
-Here is a **README.md** template that you can customize:
+## Model Performance
 
-```markdown
-# Fraud Transaction Detection
+The results showed the Random Forest classifier performed better than Logistic Regression, achieving higher precision and F1 Score while maintaining a good recall. This balance of precision and recall is crucial in fraud detection, where both false positives and false negatives have high costs.
 
-## Overview
+## How to Use
 
-This project is a machine learning model designed to detect potentially fraudulent credit card transactions. The dataset used for training contains labeled transaction data, and the model is trained to recognize patterns indicative of fraudulent activities.
-
-## Table of Contents
-- [Installation](#installation)
-- [Usage](#usage)
-- [Model](#model)
-- [Evaluation](#evaluation)
-- [Contributing](#contributing)
-- [License](#license)
-
-## Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/fraud-detection.git
-   ```
-2. Install the required Python libraries:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-## Usage
-
-1. Preprocess the dataset (cleaning and handling imbalanced data).
-2. Train the model using your preferred classification algorithm (Logistic Regression, Random Forest, Neural Networks).
-3. Evaluate the model using precision, recall, and F1-score.
-
-```python
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import classification_report
-
-# Train the model
-model = RandomForestClassifier(random_state=42)
-model.fit(X_train_bal, y_train_bal)
-
-# Predict and evaluate
-y_pred = model.predict(X_test)
-print(classification_report(y_test, y_pred))
-```
-
-## Model
-
-The model is trained using the following algorithms:
-- Logistic Regression
-- Random Forest
-- Neural Networks (optional)
-
-Feel free to experiment with these models and choose the best performing one.
-
-## Evaluation
-
-The model's performance is evaluated using:
-- **Precision**: The percentage of true positives out of all positive predictions.
-- **Recall**: The percentage of true positives out of all actual positives.
-- **F1-Score**: The harmonic mean of precision and recall.
-
-## Contributing
-
-Contributions are welcome! Please open an issue or submit a pull request.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-```
+1. Clone the repository.
+2. Load the dataset (`creditcard.csv`).
+3. Run `fraud_detection.py` to train the models and make predictions on new samples.
 
 ---
 
-Once you have set up the project and written the README, you can push it to GitHub like this:
+### Explanation of Code Section
 
-```bash
-git init
-git add .
-git commit -m "Initial commit"
-git branch -M main
-git remote add origin https://github.com/yourusername/fraud-detection.git
-git push -u origin main
+#### Logistic Regression Training and Evaluation
+
+```python
+# Train and evaluate Logistic Regression
+logistic_model.fit(X_train_res, y_train_res)
+y_pred_logistic = logistic_model.predict(X_test)
 ```
+
+- The code trains a `Logistic Regression` model on the resampled training data (`X_train_res`, `y_train_res`), which helps address the class imbalance in the dataset.
+- The model makes predictions on the test data (`X_test`).
+
+```python
+print("Logistic Regression Performance:")
+print("Precision:", precision_score(y_test, y_pred_logistic))
+print("Recall:", recall_score(y_test, y_pred_logistic))
+print("F1 Score:", f1_score(y_test, y_pred_logistic))
+print("ROC AUC Score:", roc_auc_score(y_test, y_pred_logistic))
+```
+
+- **Precision**: Indicates the proportion of detected fraud cases that were actually fraudulent.
+- **Recall**: Measures the model's ability to detect actual fraudulent cases.
+- **F1 Score**: Balances precision and recall, which is crucial when the classes are imbalanced.
+- **ROC AUC Score**: Reflects the model's ability to distinguish between classes across various thresholds, with higher values indicating better performance.
+
+#### Random Forest Training and Evaluation
+
+```python
+# Train and evaluate Random Forest
+random_forest_model.fit(X_train_res, y_train_res)
+y_pred_rf = random_forest_model.predict(X_test)
+```
+
+- The `Random Forest` model is trained on the same resampled training data.
+- Predictions are made on the test set.
+
+```python
+print("\nRandom Forest Performance:")
+print("Precision:", precision_score(y_test, y_pred_rf))
+print("Recall:", recall_score(y_test, y_pred_rf))
+print("F1 Score:", f1_score(y_test, y_pred_rf))
+print("ROC AUC Score:", roc_auc_score(y_test, y_pred_rf))
+```
+
+- Here, the `Random Forest` model outperforms Logistic Regression with a higher precision (88%), recall (80%), and F1 Score (84%).
+
+#### Classification Report
+
+```python
+# Print classification report for more details
+print("\nClassification Report for Logistic Regression:")
+print(classification_report(y_test, y_pred_logistic))
+```
+
+The classification report gives a detailed summary, including precision, recall, and F1-score for each class (0 for legitimate, 1 for fraud), overall accuracy, macro average, and weighted average, providing insight into the model's performance across different metrics. This is particularly helpful for understanding model performance on imbalanced classes.
+
